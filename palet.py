@@ -51,7 +51,6 @@ if uploaded_file is not None:
             st.image(image, caption="Gambar yang Diupload", use_container_width=True)
         except Exception as e:
             st.error(f"Gagal membuka gambar: {e}")
-            st.stop()
     st.image(image, caption="Gambar yang Diupload", use_container_width=True)
 
     img = np.array(image.resize((200, 200)))
