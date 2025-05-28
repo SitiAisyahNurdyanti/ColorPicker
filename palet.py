@@ -46,12 +46,12 @@ uploaded_file = st.file_uploader("Upload gambar di sini", type=["jpg", "jpeg", "
 
 if uploaded_file is not None:
     if uploaded_file is not None:
-    try:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Gambar yang Diupload", use_container_width=True)
-    except Exception as e:
-        st.error(f"Gagal membuka gambar: {e}")
-        st.stop()
+        try:
+            image = Image.open(uploaded_file)
+            st.image(image, caption="Gambar yang Diupload", use_container_width=True)
+        except Exception as e:
+            st.error(f"Gagal membuka gambar: {e}")
+            st.stop()
     st.image(image, caption="Gambar yang Diupload", use_container_width=True)
 
     img = np.array(image.resize((200, 200)))
