@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 from sklearn.cluster import KMeans
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import matplotlib.pyplot as plt
 import json
 import io
@@ -45,13 +45,21 @@ st.write(
 uploaded_file = st.file_uploader("Upload gambar di sini", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    if uploaded_file is not None:
-        try:
-            image = Image.open(uploaded_file)
-            st.image(image, caption="Gambar yang Diupload", use_container_width=True)
-        except Exception as e:
-            st.error(f"Gagal membuka gambar: {e}")
-    st.image(image, caption="Gambar yang Diupload", use_container_width=True)
+    # Cek ukuran file (misal maksimal 5MB)
+    max_size_mb = 5
+    if uploaded_file.size > max_size_mb * 1024 * 1024:
+        st.error(f"File terlalu besar (> {max_size_mb}MB), coba resize dulu.")
+        st.stop()
+
+    try:
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Gambar yang Diupload", use_container_width=True)
+    except UnidentifiedImageError:
+        st.error("❌ Gagal membuka gambar: format file tidak dikenali atau rusak.")
+        st.stop()
+    except Exception as e:
+        st.error(f"❌ Error saat memproses gambar: {e}")
+        st.stop()
 
     img = np.array(image.resize((200, 200)))
     img_data = img.reshape((-1, 3))
