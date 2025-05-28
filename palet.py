@@ -45,8 +45,8 @@ st.write(
 uploaded_file = st.file_uploader("Upload gambar di sini", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # Cek ukuran file (misal maksimal 5MB)
-    max_size_mb = 5
+    # Cek ukuran file (maksimal 10MB)
+    max_size_mb = 10
     if uploaded_file.size > max_size_mb * 1024 * 1024:
         st.error(f"File terlalu besar (> {max_size_mb}MB), coba resize dulu.")
         st.stop()
